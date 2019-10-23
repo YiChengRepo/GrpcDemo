@@ -1,0 +1,6 @@
+GrpcClient/target
+GrpcServer/target
+ProtobufRepo/build
+ProtobufRepo/.gradle
+.idea/**/gradle.xml
+.idea/**/libraries
