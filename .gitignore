@@ -4,3 +4,4 @@ ProtobufRepo/build
 ProtobufRepo/.gradle
 .idea/**/gradle.xml
 .idea/**/libraries
+**/.DS_Store
