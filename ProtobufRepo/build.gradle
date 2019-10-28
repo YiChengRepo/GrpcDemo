@@ -18,6 +18,10 @@ repositories {
     mavenCentral()
 }
 
+task preRubyBuild(type:Exec) {
+  commandLine 'bash', '-c', "gem install grpc grpc-tools"
+}
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation "io.grpc:grpc-protobuf:${grpcVersion}"
@@ -30,8 +34,17 @@ protobuf {
     protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
     plugins {
         grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
+        rubygrpc {
+          path = "grpc_tools_ruby_protoc"
+        }
     }
     generateProtoTasks {
-        all()*.plugins { grpc {} }
+        all().each { task ->
+            task.dependsOn ':preRubyBuild'
+            task.plugins {
+                grpc {}
+                rubygrpc {}
+            }
+        }
     }
 }
